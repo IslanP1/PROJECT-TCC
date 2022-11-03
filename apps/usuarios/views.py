@@ -12,7 +12,7 @@ class UsuarioCreate(SuccessMessageMixin, CreateView):
     form_class = UsuarioForm
     success_message = 'Usuário cadastrado com sucesso!'
     template_name = "cadastros/form.html"
-    success_url = reverse_lazy("listar_usuarios")
+    success_url = reverse_lazy("login")
 
     def get_context_data(self, **kwargs):
         context = super(CreateView, self).get_context_data(**kwargs)
