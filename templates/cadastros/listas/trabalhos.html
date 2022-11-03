@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+    <title>TCCs</title>
+{% endblock %}
+{% block conteudo %}
+    {% include 'partils/_alertas.html' %}
+    <div>
+        <h2>Lista de TCCs
+        {% if request.user.is_authenticated %}
+        <a href="{% url 'criar_trabalhos' %}" class="btn btn-dark float-end"><i class="bi bi-plus-lg"></i> Adicionar Tcc</a>
+        {% endif %}
+        </h2>
+        <hr>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped" id="tabela-listar">
+            <thead>
+                <tr>
+                    <th scope="col">Nome</th>
+                    {% if request.user.is_authenticated %}
+                    <th scope="col">Ações</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+            {% for trabalho in object_list %}
+                <tr>
+                    <td>{{ trabalho.autor }}</td>
+                   
+                    {% if request.user.is_authenticated %}
+                    <td>
+                        <a href="{% url 'editar_trabalhos' trabalho.pk %}" class="btn btn-warning btn-sm"><i class="bi bi-pencil-square"></i> Editar</a>
+                        <a href="{% url 'deletar_trabalhos' trabalho.pk %}" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i> Excluir</a>
+                        <a href="{{trabalho.tcc.url}}">Visualizar TCC</a>
+                        
+                    </td>
+                    {% endif %}
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="5">Nenhum tcc registrado.</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+

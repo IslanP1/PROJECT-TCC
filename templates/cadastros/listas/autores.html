@@ -1,0 +1,221 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Site TCC</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="{% static 'assets/favicon.ico' %}" />
+        <!-- Font Awesome icons (free version)-->
+        <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href= "{% static 'cssindex/styles.css' %}" rel="stylesheet" />
+    </head>
+    <body id="page-top">
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg bg-dark text-uppercase fixed-top" id="mainNav">
+
+            {% comment %} class="navbar navbar-dark bg-dark navbar-expand-lg h5" {% endcomment %}
+            <div class="container">
+                <a class="navbar-brand" href="#page-top">Home</a>
+                <button class="navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    Menu
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#portfolio">Autores</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{% url 'listar_trabalhos' %}">TCCs</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{% url 'listar_orientadores' %}">Orientadores</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{% url 'listar_cursos' %}">Cursos</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#about">Sobre</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#contact">Contato</a></li>
+                        {% if request.user.is_authenticated %}
+                        
+                        <li class="nav-item dropdown">
+                            <a class="nav-link py-3 px-0 px-lg-3 rounded" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-person-circle"></i> {{ request.user.first_name }}
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li><a class="dropdown-item" href="{% url 'detalhar_usuario' %}"><i class="bi bi-person"></i> Meus dados</a></li> 
+                                    <li><a class="dropdown-item" href="{% url 'password' %}"><i class="bi bi-lock"></i> Alterar senha</a></li> 
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="{% url 'logout' %}"><i class="bi bi-box-arrow-right"></i> Sair</a></li>
+                        {% else %}        
+                                    <li class="nav-item mx-0 mx-lg-1">
+                                        <a class="nav-link py-3 px-0 px-lg-3 rounded" href="{% url 'criar_usuario' %}">Criar conta</a>
+                                    </li>
+                                    <li class="nav-item mx-0 mx-lg-1">
+                                        <a class="nav-link py-3 px-0 px-lg-3 rounded" href="{% url 'login' %}"><i class="bi bi-box-arrow-in-right"></i> Login</a>
+                                    </li>
+                                </ul>
+                            </a>
+                        </li>
+                        {% endif %} 
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- Masthead-->
+        <header class="masthead bg-primary text-white text-center">
+            <div class="container d-flex align-items-center flex-column">
+                <!-- Masthead Avatar Image-->
+                <img class="rounded-circle" src="{% static 'assets/img/ifpb.jpg' %}" alt="..." />
+                <br>
+                <!-- Masthead Heading-->
+                <h1 class="masthead-heading text-uppercase mb-0">Start Tcc</h1>
+                <!-- Icon Divider-->
+                <div class="divider-custom divider-light">
+                    <div class="divider-custom-line"></div>
+                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                    <div class="divider-custom-line"></div>
+                </div>
+                <!-- Masthead Subheading-->
+                <p class="masthead-subheading font-weight-light mb-0">Grupo: Islan Pereira, José Henrique, Gustavo Marcena e Francisco Karlos</p>
+            </div>
+        </header>
+        <!-- Portfolio Section-->
+        <section class="page-section portfolio" id="portfolio">
+            <div class="container">
+                <!-- Portfolio Section Heading-->
+                <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Autores</h2>
+                <!-- Icon Divider-->
+                <div class="divider-custom">
+                    <div class="divider-custom-line"></div>
+                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                    <div class="divider-custom-line"></div>
+                </div>
+                <!-- Portfolio Grid Items-->
+                <div class="row justify-content-center">
+                    {% for autor in object_list %}
+                        <div style="text-align: center">
+                            <br>
+                            <br>
+                            <h1>{{ autor.primeiro_nome }} 
+                            <a href="{% url 'editar_autor' autor.pk %}" class="btn btn-warning btn-sm"><i class="bi bi-pencil-square"></i>Editar</a>
+                            <a href="{% url 'deletar_autor' autor.pk %}" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i> Excluir</a></h1>
+                            <br>
+                        </div>
+                        <div style="text-align: center">
+                            <img src="{{ autor.foto.url }}" alt="..." width="354px" height="472px" >
+                            <br><br>
+                        </div>
+                        
+                    {% endfor %}
+                    {% if request.user.is_authenticated %}
+                        <a href="{% url 'criar_autor' %}" class="btn btn-dark float-end"><i class="bi bi-plus-lg"></i> Adicionar autor</a>
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+        <!-- About Section-->
+        <section class="page-section bg-primary text-white mb-0" id="about">
+            <div class="container">
+                <!-- About Section Heading-->
+                <h2 class="page-section-heading text-center text-uppercase text-white">Sobre</h2>
+                <!-- Icon Divider-->
+                <div class="divider-custom divider-light">
+                    <div class="divider-custom-line"></div>
+                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                    <div class="divider-custom-line"></div>
+                </div>
+                <!-- About Section Content-->
+                <div class="row">
+                    <div class="col-lg-4 ms-auto"><p class="lead">O nosso projeto foi desenvolvido para armazenamento de tccs por meio de login e cadastro</p></div>
+                    <div class="col-lg-4 me-auto"><p class="lead">Funções básicas: Crud de usuários, autores, orientadores, curso e tcc's</p></div>
+                </div>
+                <!-- About Section Button-->
+                <div class="text-center mt-4">
+                    <a class="btn btn-xl btn-outline-light" href="https://github.com/IslanP1/projeto-tcc-03-11.git">
+                        <i class="fas fa-download me-2"></i>
+                        Repositório
+                    </a>
+                </div>
+            </div>
+        </section>
+        <!-- Contact Section-->
+        <section class="page-section" id="contact">
+            <div class="container">
+                <!-- Contact Section Heading-->
+                <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Contato</h2>
+                <!-- Icon Divider-->
+                <div class="divider-custom">
+                    <div class="divider-custom-line"></div>
+                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                    <div class="divider-custom-line"></div>
+                </div>
+                <!-- Contact Section Form-->
+                <div class="row justify-content-center">
+                    <div class="col-lg-8 col-xl-7">
+                        <form action="https://api.staticforms.xyz/submit" method="post">
+                            <div class="form-floating mb-3">
+                                <label  class="form-floating mb-3" >Nome</label>
+                                <br><br>
+                                <input class="form-control" type="text" name="name" placeholder="Digite seu nome" autocomplete="off" required>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <label class="form-floating mb-3">Email</label>
+                                <br><br>
+                                <input class="form-control" type="email" name="email" placeholder="Digite seu email" autocomplete="off" required>
+                            </div>
+                            <div class="form-floating mb-3"> 
+                                <label  class="form-floating mb-3">Mensagem</label>
+                                <br><br>
+                                <textarea class="form-control" name="message" placeholder="Digite sua mensagem" required></textarea>
+                            </div>
+                            <button class="btn btn-primary"  type="submit">Enviar</button>
+                            <input type="hidden" name="accessKey" value="c08bb1d3-e6c0-4b74-9239-abd63fbc505e">
+                            <input type="hidden" name="redirectTo" value="http://127.0.0.1:8000/#contact">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Footer-->
+        <footer class="footer text-center">
+            <div class="container">
+                <div class="row">
+                    <!-- Footer Location-->
+                    <div class="col-lg-4 mb-5 mb-lg-0">
+                        <h4 class="text-uppercase mb-4">Cajazeiras-PB</h4>
+                        <p class="lead mb-0">
+                            IFPB-Insituto Federal da Paraíba
+                            <br>
+                            (Campus Cajazeiras)
+                        </p>
+                    </div>
+                    <!-- Footer Social Icons-->
+                    <div class="col-lg-4 mb-5 mb-lg-0">
+                        <h4 class="text-uppercase mb-4">Redes socias</h4>
+                        <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-facebook-f"></i></a>
+                        <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-twitter"></i></a>
+                        <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-linkedin-in"></i></a>
+                        <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-dribbble"></i></a>
+                    </div>
+                    <!-- Footer About Text-->
+                    <div class="col-lg-4">
+                        <h4 class="text-uppercase mb-4">Trabalho realizado para fins acadêmicos</h4>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- Copyright Section-->
+        <div class="copyright py-4 text-center text-white">
+            <div class="container"><small>Copyright by projectTcc 2022</small></div>
+        </div>
+      
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src={% static 'jsindex/scripts.js' %}></script>
+        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+        <!-- * *                               SB Forms JS                               * *-->
+        <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
+        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+        <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+    </body>
+</html>
