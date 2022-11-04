@@ -36,16 +36,19 @@
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{% url 'listar_cursos' %}">Cursos</a></li>
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#about">Sobre</a></li>
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#contact">Contato</a></li>
-                        {% if request.user.is_authenticated %}
                         
+                        {% if request.user.is_authenticated %}
                         <li class="nav-item dropdown">
+                           
                             <a class="nav-link py-3 px-0 px-lg-3 rounded" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-person-circle"></i> {{ request.user.first_name }}
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <li><a class="dropdown-item" href="{% url 'detalhar_usuario' %}"><i class="bi bi-person"></i> Meus dados</a></li> 
+                                    
+                                    <li><a class="dropdown-item" href="{% url 'detalhar_usuario' request.user.pk  %}"><i class="bi bi-person"></i> Meus dados</a></li> 
                                     <li><a class="dropdown-item" href="{% url 'password' %}"><i class="bi bi-lock"></i> Alterar senha</a></li> 
                                     <li><hr class="dropdown-divider"></li>
                                     <li><a class="dropdown-item" href="{% url 'logout' %}"><i class="bi bi-box-arrow-right"></i> Sair</a></li>
-                        {% else %}        
+                                  
+                        {% else %}
                                     <li class="nav-item mx-0 mx-lg-1">
                                         <a class="nav-link py-3 px-0 px-lg-3 rounded" href="{% url 'criar_usuario' %}">Criar conta</a>
                                     </li>
@@ -55,7 +58,7 @@
                                 </ul>
                             </a>
                         </li>
-                        {% endif %} 
+                        {% endif %}
                     </ul>
                 </div>
             </div>
@@ -169,7 +172,7 @@
                             </div>
                             <button class="btn btn-primary"  type="submit">Enviar</button>
                             <input type="hidden" name="accessKey" value="c08bb1d3-e6c0-4b74-9239-abd63fbc505e">
-                            <input type="hidden" name="redirectTo" value="http://projetotcc.talesgardem.com.br/#contact">
+                            <input type="hidden" name="redirectTo" value="http://127.0.0.1:8000/#contact">
                         </form>
                     </div>
                 </div>

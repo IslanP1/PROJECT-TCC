@@ -6,7 +6,7 @@
         <div class="col-12">
             <div>
                 <h2>{{ object.first_name }} {{ object.last_name }}
-                <a href="{% url 'editar_usuario' %}" class="btn btn-warning float-end"><i class="bi bi-pencil-square"></i> Editar</a>
+                    <a href="{% url 'editar_usuario' request.user.pk %}" class="btn btn-warning float-end"><i class="bi bi-pencil-square"></i> Editar</a>
                 </h2>
                 <hr>
             </div>
@@ -15,6 +15,8 @@
         <div class="table-responsive">
             <p class="h5">Username: {{ object.username }}</p>
             <p class="h5">E-mail: {{ object.email }}</p>
+            <br>
+            <a href="{% url 'deletar_usuario' request.user.pk %}" class="btn btn-danger">Excluir</a>
         </div>
     </div>
 
